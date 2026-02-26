@@ -3,7 +3,7 @@
 Project page for the paper **“Unified Complementarity-Based Contact Modeling and Planning for Soft Robots.”**
 
 - **Authors**: Milad Azizkhani, Yue Chen (BM2 Lab, Georgia Institute of Technology)
-- **Status**: This project page will be updated shortly.
-- **arXiv**: coming soon
+- **Status**: Live project page with videos and supplemental material.
+- **arXiv**: https://arxiv.org/abs/2602.21316
 - **Code**: coming soon
 
