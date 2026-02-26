@@ -119,24 +119,62 @@ function setupVideoCarouselAutoplay() {
     });
 }
 
+// Teaser video playback speed controls
+function setupVideoSpeedControls() {
+    const buttons = document.querySelectorAll('[data-video-target][data-speed]');
+    if (buttons.length === 0) return;
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetValue = button.getAttribute('data-video-target');
+            const speed = parseFloat(button.getAttribute('data-speed'));
+
+            if (!targetValue || isNaN(speed)) return;
+
+            // Support one or multiple video IDs, comma-separated
+            const videoIds = targetValue.split(',').map(id => id.trim()).filter(id => id.length > 0);
+            if (videoIds.length === 0) return;
+
+            videoIds.forEach(id => {
+                const video = document.getElementById(id);
+                if (video) {
+                    video.playbackRate = speed;
+                }
+            });
+
+
+            // Visually highlight the active speed button within the same group
+            const group = button.closest('.video-speed-controls');
+            if (group) {
+                const groupButtons = group.querySelectorAll('button');
+                groupButtons.forEach(b => b.classList.remove('is-link'));
+                button.classList.add('is-link');
+            }
+        });
+    });
+}
+
 $(document).ready(function() {
     // Check for click events on the navbar burger icon
 
     var options = {
-		slidesToScroll: 1,
-		slidesToShow: 1,
-		loop: true,
-		infinite: true,
-		autoplay: true,
-		autoplaySpeed: 5000,
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        loop: true,
+        infinite: true,
+        autoplay: true,
+        // Keep each slide visible longer so videos can finish
+        autoplaySpeed: 60000, // 60 seconds per slide
     }
 
 	// Initialize all div with carousel class
     var carousels = bulmaCarousel.attach('.carousel', options);
 	
     bulmaSlider.attach();
-    
+
     // Setup video autoplay for carousel
     setupVideoCarouselAutoplay();
 
-})
+    // Setup teaser video speed controls
+    setupVideoSpeedControls();
+});
